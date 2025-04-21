@@ -24,7 +24,7 @@ using namespace std;
 #define fauto(i,x) for(auto i:x)
 #define vpint vector<pair<int,int> >
 #define umpint unordered_map<int,int>
-
+#define bk break
 void logic(){
     ll n;
     ll k;
@@ -47,14 +47,15 @@ void logic(){
         ll ppr = p[i];
         if(hgood && mgood <= ppr){
             fnd=1;
-            break;
+            bk;
         }
         if(hgood && ppr <= total){
             fnd = 1;
-            break;
+            bk;
         }
         if(mall <= ppr && ppr <= total){
-            fnd=1;break;
+            fnd=1;
+            bk;
         }
         if(ppr < mall) mall = ppr;
         if(ppr >= 0){
