@@ -32,18 +32,27 @@ using namespace std;
 #define minelem(x) *min_element(x.begin(),x.end())
 
 void logic(){
-    int a,b,c;
-    cin >> a >> b >> c;
-    int RecArea = a*b;
-    int SqrArea = c*c;
-
-    if(RecArea == SqrArea){
-        cout << "Yes" << nl;
-    }else{
-        cout << "No" << nl;
+    int n,k;
+    cin >> n >> k;
+    int s = n-k+1;
+    vint sm(n);
+    floop(i,1,s+1){
+        sm[i-1] = s+1-i;
     }
+    floop(i,s+1,n+1){
+        sm[i-1] = i;
+    }
+    floop(i,0,n){
+        cout << sm[i] << sp;
+    }
+    cout << nl;
 }
 int main(){
-    logic();
+    int t;
+    cin >> t;
+    while(t--){
+        logic();
+    }
+   
     return 0;
 }
