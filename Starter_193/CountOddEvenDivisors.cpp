@@ -37,7 +37,7 @@ void logic(){
     int oddcount = 0;
     int evencount = 0;
     floop(i,1,n+1){
-        if(n%1==0){
+        if(n%i==0){
             if(i%2==0){
                 evencount++;
             }else{
