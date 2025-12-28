@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 using namespace std;
-
+#define ll long long 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
@@ -11,31 +11,25 @@ int main() {
     while (t--) {
         string r;
         cin >> r;
-        vector<int> s_positions;
-        for (int i = 0; i < (int)r.size(); i++) {
-            if (r[i] == 's') s_positions.push_back(i);
+        ll ans = 0;
+        if(r[0]=='u'){
+            r[0] = 's';
+            ans++;
         }
-        if (s_positions.empty()) {
-            // Need to add two 's' and fix the middle block(even ke liye '+1')
-            int n = r.size();
-            cout << n/2 + 1 << "\n";
-            continue;
+            
+        if(r.back()=='u'){
+            r.back() = 's';
+            ans++;
         }
-        if (s_positions.size() == 1) {
-            // Need one more 's'
-            cout << 1 << "\n";
-            continue;
-        }
-
-        int ops = 0;
-        // Check gaps between consecutive 's'
-        for (int i = 0; i + 1 < (int)s_positions.size(); i++) {
-            int gap = s_positions[i+1] - s_positions[i] - 1;
-            if (gap > 0 && gap % 2 == 0) {
-                ops++;
-            }
-        }
-        cout << ops << "\n";
+        
+        vector<pair<char,int>> blocks(1,{'s',1});
+        for(int i=1;i<r.size();++i)
+            if(r[i] == blocks.back().first) blocks.back().second++;
+            else blocks.push_back({r[i],1});
+        /*Odd blocks pe itrate karenge cuz that will be of 'u'*/
+        for(int i=1;i<blocks.size();i+=2)
+            ans += blocks[i].second/2;
+        cout << ans << "\n";
     }
     return 0;
 }
