@@ -8,12 +8,10 @@ int main() {
     while (t--) {
         int n; 
         cin >> n;
-        int ans;
-        if (n == 2) ans = 2;
-        else if (n == 3) ans = 3;
-        else if (n % 2 == 0) ans = 0;
-        else ans = 1;
-        cout << ans << '\n';
+        if(n<=2) 
+            cout << n << '\n';
+        else 
+            cout << n%2 << '\n';
     }
     return 0;
 }
