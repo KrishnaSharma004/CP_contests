@@ -33,62 +33,49 @@ int gcd (int a, int b) {
 int lcm (int a, int b) {
     return a / gcd(a, b) * b;
 }
-void solve(){
+void krishna(){
     int n;
     cin >> n;
-    int len = 2 * n;
-    vector<int> a(len);
-    for (int i = 0; i < len; ++i) {
-        cin >> a[i];
-    }
-    int mx_mex = 0;
-    vector<int> pr(n + 1, 0);
-    int t = 0;
+    vi a(2*n);
+    for(auto &i : a) cin >> i;
 
-    auto get_mex = [&](int l, int r) {
-        t++;
-        for (int i = l; i <= r; ++i) {
-            if (a[i] < n) {
-                pr[a[i]] = t;
+    vi zeroidx;
+    for(int i = 0 ; i < 2*n ; ++i){
+        if(a[i] == 0) zeroidx.pb(i);
+    }
+    ll ans = 0;
+    auto findmex = [&](const int ZeroRight, const int ZeroLeft)->void{
+        for(int l=ZeroLeft,r=ZeroRight ; l<r ; l++,r--){
+            if(a[l] != a[r]){
+                return;
             }
         }
-        int mex = 0;
-        while (mex <= n && pr[mex] == t) {
-            mex++;
+        ll right = ZeroRight, left = ZeroLeft;
+        while(left>0&&right+1<2*n && a[left - 1] == a[right + 1]){
+            left--;
+            right++;
         }
-        return mex;
+        sll el;
+        for(int i = left ; i <= right ; ++i){
+            el.insert(a[i]);
+        }
+
+        ll me = 0;
+        while(el.count(me)){
+            me++;
+        }
+        ans = max(ans, me);
     };
-    //odd
-    for (int i = 0; i < len; ++i) {
-        int l = i, r = i;
-        while (l >= 0 && r < len && a[l] == a[r]) {
-            l--;
-            r++;
-        }
-        l++; r--; 
-        if (r >= l) {
-            mx_mex = max(mx_mex, get_mex(l, r));
-        }
-    }
-    //even
-    for (int i = 0; i < len - 1; ++i) {
-        int l = i, r = i + 1;
-        while (l >= 0 && r < len && a[l] == a[r]) {
-            l--;
-            r++;
-        }
-        l++; r--; 
-        if (r >= l) {
-            mx_mex = max(mx_mex, get_mex(l, r));
-        }
-    }
-    cout << mx_mex << "\n";
+    findmex(zeroidx[0],zeroidx[0]);
+    findmex(zeroidx[1],zeroidx[1]);
+    findmex(zeroidx[0],zeroidx[1]);
+    cout << ans << '\n';
 }
 int32_t main(){
     std::ios_base::sync_with_stdio(false);
     std::cin.tie(NULL);
     int t;
     cin >> t;
-    while(t--) solve();
+    while(t--) krishna();
     return 0;
 }
